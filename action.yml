@@ -8,7 +8,7 @@ runs:
   using: "composite"
   steps:
     - name: Checkout private tools
-      run: git clone --branch main https:@github.com/awshole/git-power.git
+      run: git clone --branch main https://github.com/awshole/git-power.git
       shell: pwsh
     - name: Create GitHub issue
       run: |
