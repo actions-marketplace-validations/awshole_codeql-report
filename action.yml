@@ -28,8 +28,5 @@ runs:
             $splat.Add('githubIssueAssignee', '${{ inputs.github_issue_assignee }}')
           }
           git-power/scripts/Set-CodeQLGitHubIssue.ps1 @splat
-        } elseif ('${{ github.EVENT_NAME }}' -like 'pull_request') {
-          $branchName = '${{ github.HEAD_REF }}'
-        }
-        
+        } 
       shell: pwsh
