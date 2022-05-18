@@ -1,6 +1,12 @@
 name: "CodeQL static application security testing report"
 description: "This action leverages GitHub's API to gather and post data related to CodeQL."
 inputs:
+  codeql_github_integration_token:
+    description: "Expects a string value corresponding to the GitHub repository to post a GitHub Issue to."
+    required: true
+  github_repository:
+    description: "Expects a string value corresponding to the GitHub repository to post a GitHub Issue to."
+    required: true
   github_issue_assignee:
     description: "Expects a string value corresponding to the GitHub user to assign issues to."
     required: false
@@ -18,8 +24,8 @@ runs:
             dotSourceFileRepository = 'awshole/git-power'
             dotSourceFileBranch = 'main'
             dotSourceFilePath = 'functions/github-rest-api-functions.ps1'
-            gitHubToken = '${{ github.token }}'
-            gitHubRepository = '${{ github.repository }}'
+            gitHubToken = '${{ inputs.codeql_github_integration_token }}'
+            gitHubRepository = '${{ inputs.github_repository }}'
             gitHubRepositoryBranchName = $branchName
             runId = '${{ github.run_id }}'
             labels = @('security', 'code-ql')
