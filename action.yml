@@ -1,0 +1,35 @@
+name: "CodeQL static application security testing report"
+description: "This action leverages GitHub's API to gather and post data related to CodeQL."
+inputs:
+  github_issue_assignee:
+    description: "Expects a string value corresponding to the GitHub user to assign issues to."
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout private tools
+      run: git clone --branch main https:@github.com/awshole/git-power.git
+      shell: pwsh
+    - name: Create GitHub issue
+      run: |
+        if ('${{ github.EVENT_NAME }}' -notlike 'pull_request') {
+          $branchName = '${{ github.REF }}'.Replace('refs/heads/','')
+          $splat = @{
+            dotSourceFileRepository = 'awshole/git-power'
+            dotSourceFileBranch = 'main'
+            dotSourceFilePath = 'functions/github-rest-api-functions.ps1'
+            gitHubToken = '${{ github.token }}'
+            gitHubRepository = '${{ github.repository }}'
+            gitHubRepositoryBranchName = $branchName
+            runId = '${{ github.run_id }}'
+            labels = @('security', 'code-ql')
+          }
+          if ('${{ inputs.github_issue_assignee }}' -notlike '' ) {
+            $splat.Add('githubIssueAssignee', '${{ inputs.github_issue_assignee }}')
+          }
+          git-power/scripts/Set-CodeQLGitHubIssue.ps1 @splat
+        } elseif ('${{ github.EVENT_NAME }}' -like 'pull_request') {
+          $branchName = '${{ github.HEAD_REF }}'
+        }
+        
+      shell: pwsh
