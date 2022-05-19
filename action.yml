@@ -3,10 +3,12 @@ description: "This action leverages GitHub's API to gather and post data related
 inputs:
   codeql_github_integration_token:
     description: "Expects a string value corresponding to the GitHub repository to post a GitHub Issue to."
-    required: true
+    required: false
+    default: '${{ github.token }}'
   github_repository:
     description: "Expects a string value corresponding to the GitHub repository to post a GitHub Issue to."
-    required: true
+    required: false
+    default: '${{ github.repository }}'
   github_issue_assignee:
     description: "Expects a string value corresponding to the GitHub user to assign issues to."
     required: false
