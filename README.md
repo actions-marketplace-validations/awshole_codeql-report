@@ -32,6 +32,10 @@ jobs:
       uses: github/codeql-action/analyze@v1
     - name: CodeQL Report
       uses: awshole/codeql-report@v1
+      with:
+        github_repository: ${{ github.repository }}
+        codeql_github_integration_token: ${{ github.token }}
+        github_issue_assignee: 'awshole'
 ```
 
 ## Javascript example
@@ -62,6 +66,10 @@ jobs:
       uses: github/codeql-action/analyze@v1
     - name: CodeQL Report
       uses: awshole/codeql-report@v1
+      with:
+        github_repository: ${{ github.repository }}
+        codeql_github_integration_token: ${{ github.token }}
+        github_issue_assignee: 'awshole'
 ```
 
 The CodeQL Report Action has properties which are passed to the underlying shell executing custom scripts. These are
